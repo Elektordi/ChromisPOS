@@ -26,12 +26,13 @@ report.setSentence("SELECT " +
                 "PEOPLE.NAME, " +
                 "SHIFTS.STARTSHIFT, " +
                 "SHIFTS.ENDSHIFT, " +
-                "CONCAT('',TIMEDIFF(SHIFTS.ENDSHIFT, SHIFTS.STARTSHIFT)) AS TOTAL " +
+                "CONCAT('',TIMESTAMPDIFF(SHIFTS.ENDSHIFT, SHIFTS.STARTSHIFT)) AS TOTAL " +
                 "FROM PEOPLE LEFT JOIN SHIFTS ON SHIFTS.PPLID = PEOPLE.ID " +
                 "WHERE ?(QBF_FILTER) ");
 
 report.addParameter("SHIFTS.STARTSHIFT");
 report.addParameter("SHIFTS.ENDSHIFT");
+report.addParameter("SHIFTS.SITEGUID");
 
 paramdates = new uk.chromis.pos.reports.JParamsDatesInterval();
 

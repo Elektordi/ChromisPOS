@@ -953,6 +953,7 @@ public class PromotionSupport {
                 TaxInfo tax = null;
 
                 int itemIndex = 0;
+                double diff = 0; 
 
                 // Go through products discounting each type in turn
                 for (int j = 0; j < properties.size(); ++j) {
@@ -973,8 +974,10 @@ public class PromotionSupport {
                                 }
                                 count[j] -= qty;
 
-                                DiscountProductQty(ticket, ticketIndex, sDiscountMessage, qty,
-                                        100d );
+                                diff -= info.getPrice() * qty;
+                                
+                                /*
+                                DiscountProductQty(ticket, ticketIndex, sDiscountMessage, qty, 100d );
 
                                 // ticketindexes need adjusting to accomodate the new line
                                 for (int l = 0; l < aLines.size(); ++l) {
@@ -982,6 +985,7 @@ public class PromotionSupport {
                                         aLines.get(l).setIndex(aLines.get(l).getIndex() + 1);
                                     }
                                 }
+                                */
 
                                 // Save the highest tax rate - we must charge that rate
                                 // on the final price (UK tax laws)
@@ -998,8 +1002,10 @@ public class PromotionSupport {
                 // We have now discounted all products involved the deal to zero,
                 // Now add a line to the end of the ticket for the meal deal's
                 // actual price, use the highest tax rate we found
+                
+                diff += price * smallest;
                 DiscountProductGroup(ticket, promotion, sDiscountMessage,
-                        smallest, price, tax);
+                        (double)1, diff, tax);
             }
         }
     }

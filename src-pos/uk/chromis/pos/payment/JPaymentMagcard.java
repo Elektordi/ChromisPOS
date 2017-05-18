@@ -78,8 +78,8 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
         m_paymentgateway.execute(payinfo);
 
         if (payinfo.isPaymentOK()) {
-            JOptionPane.showMessageDialog(getRootPane(), "Transaction APPROVED!", "Card Payment",
-                    JOptionPane.PLAIN_MESSAGE);
+            //JOptionPane.showMessageDialog(getRootPane(), "Transaction APPROVED!", "Card Payment",
+            //        JOptionPane.PLAIN_MESSAGE);
             revalidate();
             return payinfo;
         } else {

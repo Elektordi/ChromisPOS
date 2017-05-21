@@ -87,6 +87,7 @@
 	<class name="button.totaldiscount"/>
 	<class name="button.sendorder"/>
 	<class name="button.opendrawer"/>
+	<class name="button.nodetailticket"/>
 	<class name="/uk/chromis/reports/performancereport.bs"/>
 	<class name="/uk/chromis/reports/inventory.bs"/>
 	<class name="uk.chromis.pos.inventory.AttributeUsePanel"/>

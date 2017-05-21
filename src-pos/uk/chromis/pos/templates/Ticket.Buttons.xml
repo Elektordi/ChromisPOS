@@ -29,7 +29,10 @@
 
     <!-- SET Sales Ticket ServiceCharge (Default=DISABLED) -->
     <!-- <button key="button.scharge" image="/uk/chromis/images/heart.png" code="script.ServiceCharge"/> -->
-                
+    
+    <!-- SET No detail ticket (Default=ENABLED) -->
+	<button key="button.nodetailticket" image="/uk/chromis/images/notes.png" code="script.NoDetailTicket"/>
+        
     <!-- SET Line or Total Discount (Default=TotalDiscount= ENABLED) -->
     <button key="button.totaldiscount" image="img.discount" code="script.totaldiscount"/>
     <!-- <button key="button.linediscount" image="img.discount" code="script.linediscount"/>  -->

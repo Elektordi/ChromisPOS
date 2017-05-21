@@ -69,6 +69,7 @@
     <class name="button.sendorder"/>
     <class name="button.refundit"/>
     <class name="button.scharge"/>
+	<class name="button.nodetailticket"/>
 
     <class name="uk.chromis.pos.forms.MenuCustomers"/>
     <class name="uk.chromis.pos.customers.CustomersPanel"/>

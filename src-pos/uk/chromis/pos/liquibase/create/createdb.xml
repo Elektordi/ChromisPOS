@@ -1630,6 +1630,18 @@
             <column name="RESTYPE" valueNumeric="0"/>
             <column name="CONTENT" valueBlobResource="/uk/chromis/pos/templates/Ticket.CloseTimer.xml"/>
         </insert> 
+        <insert tableName="RESOURCES">
+            <column name="ID" value="74"/>
+            <column name="NAME" value="Printer.NoDetailTicket"/>
+            <column name="RESTYPE" valueNumeric="0"/>
+            <column name="CONTENT" valueBlobResource="/uk/chromis/pos/templates/Printer.NoDetailTicket.xml"/>
+        </insert>
+        <insert tableName="RESOURCES">
+            <column name="ID" value="75"/>
+            <column name="NAME" value="script.NoDetailTicket"/>
+            <column name="RESTYPE" valueNumeric="0"/>
+            <column name="CONTENT" valueBlobResource="/uk/chromis/pos/templates/script.NoDetailTicket.txt"/>
+        </insert>
         
         <insert tableName="RESOURCES">
             <column name="ID" value="6700"/>

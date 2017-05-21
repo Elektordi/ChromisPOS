@@ -1,0 +1,49 @@
+// script.NoDetailTicket
+// Allows to reprint last ticket without detail (French standard feature)
+//
+//   Chromis POS - The New Face of Open Source POS 
+//   Copyright (c) (c) 2015-2016Chromis , previous uniCenta & Openbravo POS works   
+//
+//   This file is part of chromis oPOS
+//
+//   Chromis POS is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   Chromis POS is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of the GNU General Public License
+//   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
+// **************************************************************************
+
+import uk.chromis.pos.forms.AppConfig;
+import uk.chromis.pos.ticket.TicketInfo;
+import uk.chromis.beans.JNumberDialog;
+import java.awt.Frame;
+
+value = JNumberDialog.showEditNumber(new Frame(), "No detail ticket", "<html>Print a summary<br/>for how many people?");
+
+if (value != null && value.intValue()>0) { 
+
+        if (AppConfig.getInstance().getProperty("lastticket.number") != null) {
+            try {
+                TicketInfo m_ticket = dlSales.loadTicket(Integer.parseInt((AppConfig.getInstance().getProperty("lastticket.type"))), Integer.parseInt((AppConfig.getInstance().getProperty("lastticket.number"))));
+                if (m_ticket != null) {
+
+                    try {
+                        taxeslogic.calculateTaxes(m_ticket);
+                    } catch (TaxesException ex) {
+                    }
+
+                    m_ticket.setProperty("people_count", String.valueOf(value.intValue())); 
+                    sales.printTicket("Printer.NoDetailTicket", m_ticket, null);
+                }
+            } catch (BasicException e) {
+
+            }
+        }
+}

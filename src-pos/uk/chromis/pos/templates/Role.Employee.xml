@@ -60,6 +60,7 @@
     <!-- Additional button scripts -->
     <class name="button.linediscount"/>
     <class name="button.sendorder"/>
+	<class name="button.nodetailticket"/>
 
     <class name="uk.chromis.pos.forms.MenuCustomers"/>
     <class name="uk.chromis.pos.customers.CustomersPanel"/>

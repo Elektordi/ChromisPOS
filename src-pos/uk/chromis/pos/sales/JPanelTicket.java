@@ -2028,6 +2028,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         public void printTicket(String sresourcename) {
             JPanelTicket.this.printTicket(sresourcename, ticket, ticketext);
         }
+        
+        public void printTicket(String sresourcename, TicketInfo ti, Object ext) {
+            JPanelTicket.this.printTicket(sresourcename, ti, ext);
+        }
 
         public Object evalScript(String code, ScriptArg... args) throws ScriptException {
             

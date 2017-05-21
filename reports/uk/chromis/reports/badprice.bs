@@ -1,5 +1,5 @@
 //   Chromis POS - The New Face of Open Source POS 
-//   Copyright (c) (c) 2015-2016 2016 Chromis works   
+//   Copyright (c) (c) 2015-2016 2016 Chromis , previous uniCenta & Openbravo POS works   
 //
 //   This file is part of chromis oPOS
 //
@@ -15,8 +15,6 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   Derby & PostgreSQl July 2016
 
 
 

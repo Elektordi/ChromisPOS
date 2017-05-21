@@ -15,16 +15,12 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   Derby  July 2016 
-//
-
 
 report = new uk.chromis.pos.reports.PanelReportBean();
 
 report.setTitleKey("Menu.InventoryReOrder");
 report.setReport("/uk/chromis/reports/inventoryreorder");
-report.setResourceBundle("uk/chromis/reports/report_messages");
+report.setResourceBundle("uk/chromis/reports/inventoryreorder_messages");
 
 report.setSentence("SELECT " +
                 "STOCKCURRENT.LOCATION AS LOCATIONID, " +
@@ -54,11 +50,10 @@ report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
-report.addParameter("PRODUCTS.ISCATALOG"); 
+report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilter());
+
 report.addParameter("STOCKCURRENT.LOCATION");
-report.addParameter("UNITS");
-report.addParameter("LOCATIONS.SITEGUID");
-report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilterReportWithCat());
+report.addQBFFilter(new uk.chromis.pos.reports.JParamsLocationWithFirst());
 
 report.addField("LOCATIONID", uk.chromis.data.loader.Datas.STRING);
 report.addField("LOCATIONNAME", uk.chromis.data.loader.Datas.STRING);

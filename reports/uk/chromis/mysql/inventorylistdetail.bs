@@ -15,16 +15,12 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   MySQL  July 2016 
-//
-
 
 report = new uk.chromis.pos.reports.PanelReportBean();
 
 report.setTitleKey("Menu.InventoryListDetail");
 report.setReport("/uk/chromis/reports/inventorylistdetail");
-report.setResourceBundle("uk/chromis/reports/report_messages");
+report.setResourceBundle("uk/chromis/reports/inventorylistdetail_messages");
 
 report.setSentence("SELECT " +
                 "STOCKCURRENT.LOCATION AS LOCATIONID, " +
@@ -37,8 +33,7 @@ report.setSentence("SELECT " +
                 "CATEGORIES.NAME AS CATEGORYNAME, " +
                 "STOCKCURRENT.UNITS, " +
                 "COALESCE(STOCKLEVEL.STOCKSECURITY, 0) AS STOCKSECURITY, " +
-                "COALESCE(STOCKLEVEL.STOCKMAXIMUM, 0) AS STOCKMAXIMUM, " +
-                "(SELECT SITES.NAME FROM SITES WHERE SITES.GUID = PRODUCTS.SITEGUID) AS SITE " +
+                "COALESCE(STOCKLEVEL.STOCKMAXIMUM, 0) AS STOCKMAXIMUM " +
                 "FROM STOCKCURRENT " +
                 "JOIN LOCATIONS ON STOCKCURRENT.LOCATION = LOCATIONS.ID " +
                 "JOIN PRODUCTS ON STOCKCURRENT.PRODUCT = PRODUCTS.ID " +
@@ -46,20 +41,16 @@ report.setSentence("SELECT " +
                 "LEFT OUTER JOIN STOCKLEVEL ON STOCKCURRENT.LOCATION = STOCKLEVEL.LOCATION AND STOCKCURRENT.PRODUCT = STOCKLEVEL.PRODUCT " +
 		        "LEFT OUTER JOIN ATTRIBUTESETINSTANCE ON STOCKCURRENT.ATTRIBUTESETINSTANCE_ID = ATTRIBUTESETINSTANCE.ID " +
                 "WHERE ?(QBF_FILTER) " +
-                "ORDER BY PRODUCTS.SITEGUID, CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION");
-
+                "ORDER BY CATEGORIES.NAME, PRODUCTS.NAME, STOCKCURRENT.LOCATION");
 
 report.addParameter("PRODUCTS.NAME");
 report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
-report.addParameter("PRODUCTS.ISCATALOG"); 
+report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilter());
 report.addParameter("STOCKCURRENT.LOCATION");
-report.addParameter("UNITS");
-report.addParameter("PRODUCTS.SITEGUID");
-
-report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilterReportWithCat(true, false));
+report.addQBFFilter(new uk.chromis.pos.reports.JParamsLocationWithFirst());
 
 report.addField("LOCATIONID", uk.chromis.data.loader.Datas.STRING);
 report.addField("LOCATIONNAME", uk.chromis.data.loader.Datas.STRING);
@@ -72,6 +63,5 @@ report.addField("CATEGORYNAME", uk.chromis.data.loader.Datas.STRING);
 report.addField("UNITS", uk.chromis.data.loader.Datas.DOUBLE);
 report.addField("STOCKSECURITY", uk.chromis.data.loader.Datas.DOUBLE);
 report.addField("STOCKMAXIMUM", uk.chromis.data.loader.Datas.DOUBLE);
-report.addField("SITE", uk.chromis.data.loader.Datas.STRING);
 
 report;

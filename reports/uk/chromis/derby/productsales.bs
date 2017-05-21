@@ -15,16 +15,12 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   Derby  July 2016 
-//
-
 
 report = new uk.chromis.pos.reports.PanelReportBean();
 
 report.setTitleKey("Menu.ProductSales");
 report.setReport("/uk/chromis/reports/productsales");
-report.setResourceBundle("uk/chromis/reports/report_messages");
+report.setResourceBundle("uk/chromis/reports/productsales_messages");
 
 report.setSentence(
             "SELECT " +
@@ -39,7 +35,6 @@ report.setSentence(
 
 report.addParameter("RECEIPTS.DATENEW");
 report.addParameter("RECEIPTS.DATENEW");
-report.addParameter("RECEIPTS.SITEGUID");
 
 paramdates = new uk.chromis.pos.reports.JParamsDatesInterval();
 
@@ -52,8 +47,7 @@ report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
-report.addParameter("PRODUCTS.SITEGUID");
-report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilterReport());
+report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilter());
 
 report.addField("REFERENCE", uk.chromis.data.loader.Datas.STRING);
 report.addField("NAME", uk.chromis.data.loader.Datas.STRING);

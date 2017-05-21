@@ -15,15 +15,12 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   Derby July 2016
-
 
 report = new uk.chromis.pos.reports.PanelReportBean();
 
 report.setTitleKey("Menu.Inventory");
 report.setReport("/uk/chromis/reports/inventory");
-report.setResourceBundle("uk/chromis/reports/report_messages");
+report.setResourceBundle("uk/chromis/reports/inventory_messages");
 
 report.setSentence("SELECT " +
                 "STOCKCURRENT.LOCATION AS LOCATIONID, " +
@@ -38,14 +35,14 @@ report.setSentence("SELECT " +
                 "COALESCE(PRODUCTS.STOCKVOLUME, 0) AS STOCKVOLUME, " +
                 "COALESCE(PRODUCTS.STOCKCOST, 0) AS STOCKCOST, " +
                 "COALESCE(STOCKLEVEL.STOCKSECURITY, 0) AS STOCKSECURITY, " +
-                "COALESCE(STOCKLEVEL.STOCKMAXIMUM, 0) AS STOCKMAXIMUM " +                
+                "COALESCE(STOCKLEVEL.STOCKMAXIMUM, 0) AS STOCKMAXIMUM " +
                 "FROM STOCKCURRENT " +
                 "JOIN LOCATIONS ON STOCKCURRENT.LOCATION = LOCATIONS.ID " +
                 "JOIN PRODUCTS ON STOCKCURRENT.PRODUCT = PRODUCTS.ID " +
                 "JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID " +
                 "LEFT OUTER JOIN STOCKLEVEL ON STOCKCURRENT.LOCATION = STOCKLEVEL.LOCATION AND STOCKCURRENT.PRODUCT = STOCKLEVEL.PRODUCT " +
                 "WHERE ?(QBF_FILTER) " +
-                "GROUP BY STOCKCURRENT.LOCATION, LOCATIONS.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.CATEGORY, CATEGORIES.NAME, PRODUCTS.PRICEBUY, PRODUCTS.PRICESELL, PRODUCTS.STOCKVOLUME, PRODUCTS.STOCKCOST, STOCKLEVEL.STOCKSECURITY, STOCKLEVEL.STOCKMAXIMUM  " +
+                "GROUP BY STOCKCURRENT.LOCATION, LOCATIONS.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.CATEGORY, CATEGORIES.NAME, PRODUCTS.PRICEBUY, PRODUCTS.PRICESELL, PRODUCTS.STOCKVOLUME, PRODUCTS.STOCKCOST, STOCKLEVEL.STOCKSECURITY, STOCKLEVEL.STOCKMAXIMUM " +
                 "ORDER BY STOCKCURRENT.LOCATION, CATEGORIES.NAME, PRODUCTS.NAME");
 
 report.addParameter("PRODUCTS.NAME");
@@ -53,12 +50,10 @@ report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
-report.addParameter("PRODUCTS.ISCATALOG"); 
-report.addParameter("STOCKCURRENT.LOCATION");
-report.addParameter("UNITS");
-report.addParameter("PRODUCTS.SITEGUID");
+report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilter());
 
-report.addQBFFilter(new uk.chromis.pos.ticket.ProductFilterReportWithCat());
+report.addParameter("STOCKCURRENT.LOCATION");
+report.addQBFFilter(new uk.chromis.pos.reports.JParamsLocationWithFirst());
 
 
 

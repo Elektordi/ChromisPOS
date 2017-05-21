@@ -15,10 +15,6 @@
 //
 //   You should have received a copy of the GNU General Public License
 //   along with Chromis POS.  If not, see <http://www.gnu.org/licenses/>.
-//
-//   PostgreSQL  July 2016  
-//
-
 
 report = new uk.chromis.pos.reports.PanelReportBean();
 
@@ -30,13 +26,12 @@ report.setSentence("SELECT " +
                 "PEOPLE.NAME, " +
                 "SHIFTS.STARTSHIFT, " +
                 "SHIFTS.ENDSHIFT, " +
-                "CONCAT('',TIMESTAMPDIFF(SHIFTS.ENDSHIFT, SHIFTS.STARTSHIFT)) AS TOTAL " +
+                "CONCAT('',TIMEDIFF(SHIFTS.ENDSHIFT, SHIFTS.STARTSHIFT)) AS TOTAL " +
                 "FROM PEOPLE LEFT JOIN SHIFTS ON SHIFTS.PPLID = PEOPLE.ID " +
                 "WHERE ?(QBF_FILTER) ");
 
 report.addParameter("SHIFTS.STARTSHIFT");
 report.addParameter("SHIFTS.ENDSHIFT");
-report.addParameter("SHIFTS.SITEGUID");
 
 paramdates = new uk.chromis.pos.reports.JParamsDatesInterval();
 

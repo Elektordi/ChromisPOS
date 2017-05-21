@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-07-12T21:08:58 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventory" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="68d2acd5-c58c-4a6a-ba38-cb35eef0b240">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -10,7 +8,27 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<field name="SITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+STOCKCURRENT.LOCATION AS LOCATIONID,
+LOCATIONS.NAME AS LOCATIONNAME,
+PRODUCTS.REFERENCE,
+PRODUCTS.NAME AS NAME,
+PRODUCTS.CATEGORY,
+CATEGORIES.NAME AS CATEGORYNAME,
+STOCKCURRENT.UNITS,
+PRODUCTS.PRICEBUY,
+PRODUCTS.PRICESELL,
+COALESCE(PRODUCTS.STOCKVOLUME, 0) AS STOCKVOLUME,
+COALESCE(PRODUCTS.STOCKCOST, 0) AS STOCKCOST,
+COALESCE(STOCKCURRENT.STOCKSECURITY, 0) AS STOCKSECURITY,
+COALESCE(STOCKCURRENT.STOCKMAXIMUM, 0) AS STOCKMAXIMUM
+FROM STOCKCURRENT
+JOIN LOCATIONS ON STOCKCURRENT.LOCATION = LOCATIONS.ID
+JOIN PRODUCTS ON STOCKCURRENT.PRODUCT = PRODUCTS.REFERENCE
+JOIN CATEGORIES ON PRODUCTS.CATEGORY = CATEGORIES.ID
+ORDER BY STOCKCURRENT.LOCATION, CATEGORIES.NAME, PRODUCTS.NAME]]>
+	</queryString>
 	<field name="REFERENCE" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
 	<field name="CATEGORY" class="java.lang.String"/>
@@ -40,28 +58,6 @@
 		<variableExpression><![CDATA[new Double($F{STOCKCOST}.doubleValue() * $F{UNITS}.doubleValue())]]></variableExpression>
 		<initialValueExpression><![CDATA[new Double(0.0)]]></initialValueExpression>
 	</variable>
-	<group name="bysite1">
-		<groupExpression><![CDATA[$F{SITE}]]></groupExpression>
-		<groupHeader>
-			<band height="22">
-				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				<textField>
-					<reportElement x="0" y="0" width="170" height="20" forecolor="#1C08FC" uuid="9aefcbe6-412b-4017-a138-55179f914b88">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
-					<textElement>
-						<font size="12" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{SITE}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="10">
-				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-			</band>
-		</groupFooter>
-	</group>
 	<group name="LOCATIONSGROUP">
 		<groupExpression><![CDATA[$F{LOCATIONID}]]></groupExpression>
 		<groupHeader>
@@ -392,7 +388,7 @@
 					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$R{title.inventory}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$R{label.title}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="5">
 				<reportElement key="rectangle-4" mode="Opaque" x="0" y="50" width="535" height="2" forecolor="#33CCFF" backcolor="#33CCFF" uuid="6b363cdb-61f2-4ba1-a894-a6e142ee3315"/>
@@ -419,7 +415,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[uk.chromis.format.Formats.TIMESTAMP.formatValue(new Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
